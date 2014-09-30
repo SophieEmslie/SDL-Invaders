@@ -20,7 +20,7 @@ int main()
 
   // we are now going to create an SDL window
   SDL_Window *win = 0;
-  win = SDL_CreateWindow("Sprite Sheet", 100, 100, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
+  win = SDL_CreateWindow("Space Invaders", 100, 100, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
   if (win == 0)
   {
     printf("%s\n",SDL_GetError());
