@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
-
 #include "player.h"
 
 const int WIDTH = 800;
@@ -37,6 +36,12 @@ int main()
     return EXIT_FAILURE;
   }
 
+
+
+
+
+
+
   // Pointer to keyboard state
   const Uint8 *KEY = SDL_GetKeyboardState(NULL);
 
@@ -55,14 +60,11 @@ int main()
     while (SDL_PollEvent(&event))
     {
       // look for the x of the window being clicked and exit
-      if (event.type == SDL_QUIT)
+      if (event.type == SDL_QUIT || KEY[ SDL_SCANCODE_ESCAPE ])
       {
         quit= 1;
       }
 
-      if(KEY[ SDL_SCANCODE_ESCAPE ]) {
-          quit= 1;
-      }
     }// end PollEvent loop
 
     // Read input
@@ -70,6 +72,13 @@ int main()
     if(KEY[SDL_SCANCODE_RIGHT]) { movePlayer(p1,  xOffset,        0); }
     if(KEY[SDL_SCANCODE_UP])    { movePlayer(p1,        0, -yOffset); }
     if(KEY[SDL_SCANCODE_DOWN])  { movePlayer(p1,        0,  yOffset); }
+
+    if(KEY[SDL_SCANCODE_SPACE])
+    {
+        fireProjectile(p1);
+    }
+
+    moveProjectile(p1, 8);
 
     // Do player boundary checks
     const int playerWidth = p1->bounds.w;
@@ -89,7 +98,15 @@ int main()
     // the main task you have is to get the correct src / dst SDL_Rect values filled in
     //SDL_RenderCopy(renderer, sprite, &spriteAnimation, &spritePosition);
 
+
     SDL_RenderDrawRect(renderer, &p1->bounds);
+
+    if (p1->state==FIRING )
+    {
+        SDL_RenderDrawRect(renderer, &p1->projectile);
+    }
+
+
 
     // Up until now everything was drawn behind the scenes.
     // This will show the new, red contents of the window.
